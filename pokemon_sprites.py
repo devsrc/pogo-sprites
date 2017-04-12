@@ -6,7 +6,8 @@ from os.path import join
 
 sprites = {}
 outfile = "poke_sprites.json"
-target_url_base = "https://assets-5.bostonpogomap.com/images/poke/"
+source_url_base = "https://assets-5.bostonpogomap.com/images/poke/"
+target_url_base = "https://raw.githubusercontent.com/devsrc/pogo-sprites/master/sprites/clean/"
 poke_ids = range(1, 251+1)
 
 for i in poke_ids:

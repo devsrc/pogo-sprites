@@ -1,21 +1,25 @@
 import requests
 import json
+import urllib
+from os.path import join
+
 
 sprites = {}
+outfile = "poke_sprites.json"
+source_url_base = "http://assets-5.bostonpogomap.com/images/poke/"
+poke_ids = range(1, 251+1)
 
-# for i in range(1, 251+1):
-# 	r = requests.get("http://pokeapi.co/api/v2/pokemon-form/{}/".format(i))
-# 	url = r.json()["sprites"]["front_default"]
-# 	print(url)
-# 	sprites["id{}".format(i)] = {"url": str(url)}
+for i in poke_ids:
+	fname = "{}.png".format(i)
+	s = "{}{}".format(source_url_base, fname)
 
-for i in range(1, 251+1):
-	s = "http://assets-5.bostonpogomap.com/images/poke/{}.png".format(i)
-	# s = "http://serebii.net/pokemongo/pokemon/{:03d}.png".format(i)
+	try:
+		t = urllib.urlretrieve(s, join("sprites", "clean", fname))
+	except IOError:
+		print("Error at id: {}".format(i))
+
 	sprites["id{}".format(i)] = { "url":s }
 
-s = json.dumps(sprites, indent=4)
-
-with open("poke_sprites.json", 'w') as f:
-	f.write(s)
+with open(outfile, 'w') as f:
+	f.write(json.dumps(sprites, indent=4))
 
